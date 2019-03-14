@@ -1,0 +1,8 @@
+备份：
+mysqldump -uroot -pfox@4488 -P3306 mediashare > mediashare_bak.sql
+
+创建库：
+create database mediashare default character set utf8mb4 collate utf8mb4_unicode_ci;
+
+还原: 
+mysql -uroot mediashare < mediashare_bak.sql
