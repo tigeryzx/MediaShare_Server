@@ -39,6 +39,8 @@ namespace MediaShare.EntityFrameworkCore
 
         public DbSet<PicTagRelation> PicTagRelation { get; set; }
 
+        public DbSet<PicViewRecord> PicViewRecord { get; set; }
+
 
         public MediaShareDbContext(DbContextOptions<MediaShareDbContext> options)
             : base(options)

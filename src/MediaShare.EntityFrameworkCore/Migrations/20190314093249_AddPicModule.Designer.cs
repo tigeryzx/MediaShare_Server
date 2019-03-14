@@ -3,14 +3,16 @@ using System;
 using MediaShare.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MediaShare.Migrations
 {
     [DbContext(typeof(MediaShareDbContext))]
-    partial class MediaShareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190314093249_AddPicModule")]
+    partial class AddPicModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

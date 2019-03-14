@@ -15,6 +15,6 @@ namespace MediaShare.Media.Manager
 
         public static readonly SettingKey FtpServer = new SettingKey("FtpServer");
 
-        public static readonly SettingKey ImageDir = new SettingKey("ImageDir");
+        public static readonly SettingKey VideoImageDir = new SettingKey("ImageDir");
     }
 }

@@ -28,12 +28,21 @@ namespace MediaShare.Controllers
 
         [DontWrapResult]
         [HttpGet]
+        public ActionResult GetPic(int picId, int? maxWidth)
+        {
+            var imageByte = this._imageService.GetPicByte(picId, maxWidth);
+            if (imageByte != null)
+                return File(imageByte, "image/jpg");
+            return NotFound();
+        }
+
+        [DontWrapResult]
+        [HttpGet]
         public ActionResult GetImage(int imageId,int? maxWidth)
         {
             var imageByte = this._imageService.GetVideoImageByte(imageId, maxWidth);
             if (imageByte != null)
                 return File(imageByte, "image/jpg");
-
             return NotFound();
         }
     }

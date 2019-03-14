@@ -8,5 +8,7 @@ namespace MediaShare.Media.Manager
     public interface IImageService :IDomainService
     {
         byte[] GetVideoImageByte(int imageId, int? maxWidth);
+
+        byte[] GetPicByte(int picId, int? maxWidth);
     }
 }
