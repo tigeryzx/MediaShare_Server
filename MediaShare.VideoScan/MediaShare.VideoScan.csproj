@@ -82,10 +82,20 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Image.cs" />
+    <Compile Include="Model\Picture.cs" />
     <Compile Include="Model\ResDir.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Model\Video.cs" />
     <Compile Include="Model\VideoCoverInfo.cs" />
+    <Compile Include="PicFilter\IPicFilter.cs" />
+    <Compile Include="PicFilter\PicFileLengthFilter.cs" />
+    <Compile Include="PicFilter\PicSizeFilter.cs" />
+    <Compile Include="PicScan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PicScan.Designer.cs">
+      <DependentUpon>PicScan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScanHelper.cs" />
@@ -95,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PicScan.resx">
+      <DependentUpon>PicScan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

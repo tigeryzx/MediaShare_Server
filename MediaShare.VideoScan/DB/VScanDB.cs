@@ -25,6 +25,8 @@ namespace MediaShare.VideoScan.DB
         public DbSet<Image> Images { get; set; }
         public DbSet<Setting> MSettings { get; set; }
 
+        public DbSet<Picture> Picture { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder
@@ -62,6 +64,12 @@ namespace MediaShare.VideoScan.DB
             modelBuilder
                 .Entity<Setting>()
                 .ToTable("msettings")
+                .Property(x => x.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            modelBuilder
+                .Entity<Picture>()
+                .ToTable("picture")
                 .Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 

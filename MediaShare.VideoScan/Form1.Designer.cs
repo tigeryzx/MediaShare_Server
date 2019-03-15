@@ -41,6 +41,7 @@
             this.txtOutputDir = new System.Windows.Forms.TextBox();
             this.btnScan = new System.Windows.Forms.Button();
             this.btnCover = new System.Windows.Forms.Button();
+            this.btnPicScan = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -175,11 +176,22 @@
             this.btnCover.UseVisualStyleBackColor = true;
             this.btnCover.Click += new System.EventHandler(this.btnCover_Click);
             // 
+            // btnPicScan
+            // 
+            this.btnPicScan.Location = new System.Drawing.Point(95, 526);
+            this.btnPicScan.Name = "btnPicScan";
+            this.btnPicScan.Size = new System.Drawing.Size(75, 23);
+            this.btnPicScan.TabIndex = 10;
+            this.btnPicScan.Text = "图片扫描";
+            this.btnPicScan.UseVisualStyleBackColor = true;
+            this.btnPicScan.Click += new System.EventHandler(this.btnPicScan_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(736, 561);
+            this.Controls.Add(this.btnPicScan);
             this.Controls.Add(this.btnCover);
             this.Controls.Add(this.btnScan);
             this.Controls.Add(this.txtLog);
@@ -215,6 +227,7 @@
         private System.Windows.Forms.TextBox txtOutputDir;
         private System.Windows.Forms.Button btnScan;
         private System.Windows.Forms.Button btnCover;
+        private System.Windows.Forms.Button btnPicScan;
     }
 }
 

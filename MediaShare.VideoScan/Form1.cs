@@ -44,7 +44,11 @@ namespace MediaShare.VideoScan
 
         public string GetSetting(string settingName)
         {
-            return this._DB.MSettings.Single(x => x.SettingName == settingName).SettingValue;
+            var setting = this._DB.MSettings.SingleOrDefault(x => x.SettingName == settingName);
+            if (setting != null)
+                return setting.SettingValue;
+            else
+                return null;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -201,6 +205,12 @@ namespace MediaShare.VideoScan
         {
             CoverManager coverManager = new CoverManager();
             coverManager.ShowDialog();
+        }
+
+        private void btnPicScan_Click(object sender, EventArgs e)
+        {
+            PicScan picScan = new PicScan();
+            picScan.ShowDialog();
         }
     }
 }

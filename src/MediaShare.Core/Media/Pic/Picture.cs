@@ -20,7 +20,7 @@ namespace MediaShare.Media.Pic
 
         public int Height { get; set; }
 
-        public int Size { get; set; }
+        public long Size { get; set; }
 
         public string Title { get; set; }
 
