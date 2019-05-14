@@ -13,19 +13,6 @@ namespace MediaShare.Media.Pic.Dto
 
         public int? FavId { get; set; }
 
-        /// <summary>
-        /// 按常看排序
-        /// </summary>
-        public bool? IsHotPlay { get; set; }
-
-        /// <summary>
-        /// 按查看历史排序
-        /// </summary>
-        public bool? IsHistoryView { get; set; }
-
-        /// <summary>
-        /// 是否随机列表
-        /// </summary>
-        public bool? IsRandomList { get; set; }
+        public string ViewType { get; set; }
     }
 }

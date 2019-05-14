@@ -39,6 +39,9 @@ namespace MediaShare.Media.Pic
                 Name = favName,
                 User = user
             });
+
+            this._picFavRepo.Insert(fav);
+            this.CurrentUnitOfWork.SaveChanges();
             return this.ObjectMapper.Map<PicFavDto>(fav);
         }
 

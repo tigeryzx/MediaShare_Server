@@ -210,6 +210,7 @@ namespace MediaShare.VideoScan
         private void btnPicScan_Click(object sender, EventArgs e)
         {
             PicScan picScan = new PicScan();
+            
             picScan.ShowDialog();
         }
     }

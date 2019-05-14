@@ -88,6 +88,7 @@
     <Compile Include="Model\Video.cs" />
     <Compile Include="Model\VideoCoverInfo.cs" />
     <Compile Include="PicFilter\IPicFilter.cs" />
+    <Compile Include="PicFilter\PicExistsFilter.cs" />
     <Compile Include="PicFilter\PicFileLengthFilter.cs" />
     <Compile Include="PicFilter\PicSizeFilter.cs" />
     <Compile Include="PicScan.cs">

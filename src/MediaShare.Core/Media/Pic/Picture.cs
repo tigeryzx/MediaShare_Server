@@ -16,6 +16,8 @@ namespace MediaShare.Media.Pic
 
         public string RealPath { get; set; }
 
+        public string RootDir { get; set; }
+
         public int Width { get; set; }
 
         public int Height { get; set; }

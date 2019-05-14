@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Abp.ObjectMapping;
 using Abp.Application.Services;
+using Abp.Linq.Extensions;
 
 namespace MediaShare.Media.Pic
 {
@@ -55,16 +56,60 @@ namespace MediaShare.Media.Pic
 
         public PagedResultDto<PicDto> GetAll(PicPageRequestDto input)
         {
-            var pageQuery = this._pictureRepo.GetAll();
+            var pageQuery = this._pictureRepo.GetAll()
+                .Include(x => x.PicTagRelation)
+                .ThenInclude(x => x.Tag)
+                .WhereIf(!string.IsNullOrEmpty(input.Key), x => x.RealPath.Contains(input.Key));
 
             var count = pageQuery.Count();
 
-            var data = pageQuery
-                .Include(x => x.PicFavRelation)
-                .Skip(input.SkipCount)
-                .Take(input.MaxResultCount)
-                .ToList();
-            
+            // 查看数最高
+            if (input.ViewType == "top")
+            {
+                pageQuery = pageQuery.Where(x => x.PicViewRecord.Count() > 0)
+                    .OrderByDescending(x => x.PicViewRecord.Count());
+            }
+
+            // 历史查看时间
+            if(input.ViewType == "history")
+            {
+                pageQuery = pageQuery.Where(x => x.PicViewRecord.Count() > 0)
+                    .OrderByDescending(x => x.PicViewRecord.Max(y => y.ViewDate));
+            }
+
+            List<Picture> data = null;
+            // 随机
+            if (input.ViewType == "random")
+            {
+                var picIdsList = pageQuery.Select(x => x.Id).ToArray();
+
+                int[] picIds = new int[input.MaxResultCount];
+                Random rnd = new Random();
+                for (var i = 0; i < picIds.Length; i++)
+                {
+                    // 防止随机重复
+                    do
+                    {
+                        int index = rnd.Next(picIdsList.Length);
+                        var rndPicId = picIdsList[index];
+                        picIds[i] = rndPicId;
+                    } while (picIds.Count(x => x == picIds[i]) > 1);
+                }
+
+                data = pageQuery
+                    .Where(x => picIds.Contains(x.Id))
+                    .ToList();
+            }
+            else
+            {
+                data = pageQuery
+                    .Include(x => x.PicFavRelation)
+                    .Skip(input.SkipCount)
+                    .Take(input.MaxResultCount)
+                    .ToList();
+            }
+         
+
             var items = this.ObjectMapper.Map<List<PicDto>>(data);
 
             if (items != null)
@@ -78,7 +123,7 @@ namespace MediaShare.Media.Pic
                         .Count(x => x.Picture.Id == item.Id);
                 });
             }
-      
+
             return new PagedResultDto<PicDto>()
             {
                 TotalCount = count,

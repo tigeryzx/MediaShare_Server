@@ -5,6 +5,8 @@ using Abp.Runtime.Session;
 using MediaShare.Authorization;
 using MediaShare.Media;
 using MediaShare.Media.Dto;
+using MediaShare.Media.Pic;
+using MediaShare.Media.Pic.Dto;
 
 namespace MediaShare
 {
@@ -32,6 +34,13 @@ namespace MediaShare
 
                 config.CreateMap<Favorite, FavoriteDto>()
                     .ForMember(x => x.VideoCount, options => options.MapFrom(x => x.GetVideoCount()));
+
+                config.CreateMap<PicTagRelation, PicTagDto>()
+                    .ForMember(x => x.Name, options => options.MapFrom(x => x.Tag.Name))
+                    .ForMember(x => x.Id, options => options.MapFrom(x => x.Tag.Id));
+
+                config.CreateMap<Picture, PicDto>()
+                    .ForMember(x => x.Tags, options => options.MapFrom(x => x.PicTagRelation));
             });
         }
 

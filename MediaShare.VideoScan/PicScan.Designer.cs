@@ -120,7 +120,7 @@
             this.lbCount.Name = "lbCount";
             this.lbCount.Size = new System.Drawing.Size(53, 12);
             this.lbCount.TabIndex = 9;
-            this.lbCount.Text = "处理进度";
+            this.lbCount.Text = "明细信息";
             // 
             // PicScan
             // 
@@ -136,6 +136,7 @@
             this.Controls.Add(this.txtResDirs);
             this.Controls.Add(this.label1);
             this.Name = "PicScan";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "PicScan";
             this.ResumeLayout(false);
             this.PerformLayout();

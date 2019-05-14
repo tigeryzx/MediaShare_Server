@@ -32,7 +32,7 @@ namespace MediaShare.VideoScan
 
             var dirList = new string[] 
             {
-                @"D:\Program Files",
+                @"E:\Resource\图片",
                 GetSetting("PicScanPath")
             };
 
@@ -45,6 +45,9 @@ namespace MediaShare.VideoScan
                     this.txtResDirs.AppendText(string.Format("{0};", path));
                 }
             }
+
+            LogerFactory.Instance.SetLoger(new WinLoger(this.txtLog));
+            _loger = LogerFactory.Instance.GetLoger();
         }
 
         public string GetSetting(string settingName)
@@ -74,7 +77,9 @@ namespace MediaShare.VideoScan
                 // 至少1K
                 new PicFileLengthFilter(1000),
                 // 至少 w 300 以上，H 300 以上
-                new PicSizeFilter(300,300)
+                new PicSizeFilter(300,300),
+                // 已经存在
+                new PicExistsFilter(this._DB)
             }));
 
             this.btnScan.Enabled = true;
@@ -96,7 +101,7 @@ namespace MediaShare.VideoScan
                 this.lbProcess.Text = string.Format("{0}/{1}({2})%", currentValue,
                     this.progressBar1.Maximum, precent);
 
-                this.lbCount.Text = string.Format("成功:{0} 失败:{1} 跳过:{2}", count_success, count_failed, count_skip);
+                this.lbCount.Text = string.Format("成功:{0} 失败:{1} 跳过(过滤):{2}", count_success, count_failed, count_skip);
             });
 
             for (var i = 0; i < result.Count; i++)
@@ -111,8 +116,10 @@ namespace MediaShare.VideoScan
                     CreateDate = DateTime.Now,
                     FileName = System.IO.Path.GetFileName(picPath),
                     RealPath = picPath,
-                    Title = System.IO.Path.GetFileNameWithoutExtension(picPath)
+                    Title = System.IO.Path.GetFileNameWithoutExtension(picPath),
                 };
+
+                pic.RootDir = pic.RealPath.Substring(0, pic.RealPath.LastIndexOf("\\"));
 
                 try
                 {
@@ -130,22 +137,14 @@ namespace MediaShare.VideoScan
                     {
                         foreach (var f in filters)
                         {
-                            var isAllow = f.Filter(pic);
-                            if (!isAllow)
-                            {
-                                skip = true;
+                            skip = !f.Filter(pic);
+                            if (skip)
                                 break;
-                            }
+                            
                         }
                     }
 
-                    // 判断已存在
-                    skip = this._DB.Picture.Count(x => x.RealPath == pic.RealPath
-                    || (
-                        x.FileName == pic.FileName
-                        && x.Width == pic.Width
-                        && x.Height == pic.Height
-                        && x.Size == pic.Size)) > 0;
+
                 }
                 catch
                 {
@@ -165,10 +164,12 @@ namespace MediaShare.VideoScan
                     else if (error)
                     {
                         count_failed++;
+                        this._loger.Error(pic.RealPath);
                     }
                     else if (skip)
                     {
                         count_skip++;
+                        this._loger.Info(string.Format("skip:{0}", pic.RealPath));
                     }
 
                     if (currentIndex % 1000 == 0)

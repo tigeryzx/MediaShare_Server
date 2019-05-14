@@ -45,6 +45,10 @@ namespace MediaShare.Media.Pic
             {
                 Name = tagName
             });
+
+            this._picTagRepo.Insert(tag);
+            this.CurrentUnitOfWork.SaveChanges();
+
             return this.ObjectMapper.Map<PicTagDto>(tag);
         }
 

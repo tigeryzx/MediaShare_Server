@@ -25,5 +25,7 @@ namespace MediaShare.VideoScan.Model
         public DateTime CreateDate { get; set; }
 
         public bool IsHidden { get; set; }
+
+        public string RootDir { get; set; }
     }
 }
